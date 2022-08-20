@@ -61,6 +61,7 @@ from homeassistant.util import (
     dt as dt_util,
     pressure as pressure_util,
     temperature as temperature_util,
+    distance as distance_util,
 )
 
 from .const import CONF_STATE_CLASS  # noqa: F401
@@ -100,6 +101,9 @@ class SensorDeviceClass(StrEnum):
 
     # date (ISO8601)
     DATE = "date"
+
+    # distance
+    DISTANCE = "distance"
 
     # fixed duration (TIME_DAYS, TIME_HOURS, TIME_MINUTES, TIME_SECONDS)
     DURATION = "duration"
@@ -196,7 +200,6 @@ class SensorStateClass(StrEnum):
 
 STATE_CLASSES_SCHEMA: Final = vol.All(vol.Lower, vol.Coerce(SensorStateClass))
 
-
 # STATE_CLASS* is deprecated as of 2021.12
 # use the SensorStateClass enum instead.
 STATE_CLASS_MEASUREMENT: Final = "measurement"
@@ -207,20 +210,19 @@ STATE_CLASSES: Final[list[str]] = [cls.value for cls in SensorStateClass]
 UNIT_CONVERSIONS: dict[str, Callable[[float, str, str], float]] = {
     SensorDeviceClass.PRESSURE: pressure_util.convert,
     SensorDeviceClass.TEMPERATURE: temperature_util.convert,
+    SensorDeviceClass.DISTANCE: distance_util.convert,
 }
 
 UNIT_RATIOS: dict[str, dict[str, float]] = {
     SensorDeviceClass.PRESSURE: pressure_util.UNIT_CONVERSION,
-    SensorDeviceClass.TEMPERATURE: {
-        TEMP_CELSIUS: 1.0,
-        TEMP_FAHRENHEIT: 1.8,
-        TEMP_KELVIN: 1.0,
-    },
+    SensorDeviceClass.TEMPERATURE: dict.fromkeys(temperature_util.VALID_UNITS, 1),
+    SensorDeviceClass.DISTANCE: dict(map(lambda unit: (unit, distance_util.convert(1, distance_util.LENGTH_METERS, unit)), distance_util.VALID_UNITS)),
 }
 
 VALID_UNITS: dict[str, tuple[str, ...]] = {
     SensorDeviceClass.PRESSURE: pressure_util.VALID_UNITS,
     SensorDeviceClass.TEMPERATURE: temperature_util.VALID_UNITS,
+    SensorDeviceClass.DISTANCE: distance_util.VALID_UNITS,
 }
 
 
@@ -325,8 +327,8 @@ class SensorEntity(Entity):
         """Return state attributes."""
         if last_reset := self.last_reset:
             if (
-                self.state_class != SensorStateClass.TOTAL
-                and not self._last_reset_reported
+                    self.state_class != SensorStateClass.TOTAL
+                    and not self._last_reset_reported
             ):
                 self._last_reset_reported = True
                 report_issue = self._suggest_report_issue()
@@ -372,8 +374,8 @@ class SensorEntity(Entity):
         native_unit_of_measurement = self.native_unit_of_measurement
 
         if (
-            self.device_class == DEVICE_CLASS_TEMPERATURE
-            and native_unit_of_measurement in (TEMP_CELSIUS, TEMP_FAHRENHEIT)
+                self.device_class == DEVICE_CLASS_TEMPERATURE
+                and native_unit_of_measurement in (TEMP_CELSIUS, TEMP_FAHRENHEIT)
         ):
             return self.hass.config.units.temperature_unit
 
@@ -424,9 +426,9 @@ class SensorEntity(Entity):
                 ) from err
 
         if (
-            value is not None
-            and native_unit_of_measurement != unit_of_measurement
-            and device_class in UNIT_CONVERSIONS
+                value is not None
+                and native_unit_of_measurement != unit_of_measurement
+                and device_class in UNIT_CONVERSIONS
         ):
             assert unit_of_measurement
             assert native_unit_of_measurement
@@ -475,11 +477,11 @@ class SensorEntity(Entity):
         """Run when the entity registry entry has been updated."""
         assert self.registry_entry
         if (
-            (sensor_options := self.registry_entry.options.get(DOMAIN))
-            and (custom_unit := sensor_options.get(CONF_UNIT_OF_MEASUREMENT))
-            and (device_class := self.device_class) in UNIT_CONVERSIONS
-            and self.native_unit_of_measurement in VALID_UNITS[device_class]
-            and custom_unit in VALID_UNITS[device_class]
+                (sensor_options := self.registry_entry.options.get(DOMAIN))
+                and (custom_unit := sensor_options.get(CONF_UNIT_OF_MEASUREMENT))
+                and (device_class := self.device_class) in UNIT_CONVERSIONS
+                and self.native_unit_of_measurement in VALID_UNITS[device_class]
+                and custom_unit in VALID_UNITS[device_class]
         ):
             self._sensor_option_unit_of_measurement = custom_unit
             return
