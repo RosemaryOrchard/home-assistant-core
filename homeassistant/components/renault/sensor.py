@@ -230,6 +230,7 @@ SENSOR_TYPES: tuple[RenaultSensorEntityDescription[Any], ...] = (
         name="Battery autonomy",
         native_unit_of_measurement=LENGTH_KILOMETERS,
         state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.DISTANCE,
     ),
     RenaultSensorEntityDescription(
         key="battery_available_energy",
@@ -271,6 +272,7 @@ SENSOR_TYPES: tuple[RenaultSensorEntityDescription[Any], ...] = (
         native_unit_of_measurement=LENGTH_KILOMETERS,
         state_class=SensorStateClass.TOTAL_INCREASING,
         value_lambda=_get_rounded_value,
+        device_class=SensorDeviceClass.DISTANCE,
     ),
     RenaultSensorEntityDescription(
         key="fuel_autonomy",
@@ -283,6 +285,7 @@ SENSOR_TYPES: tuple[RenaultSensorEntityDescription[Any], ...] = (
         state_class=SensorStateClass.MEASUREMENT,
         requires_fuel=True,
         value_lambda=_get_rounded_value,
+        device_class=SensorDeviceClass.DISTANCE,
     ),
     RenaultSensorEntityDescription(
         key="fuel_quantity",
