@@ -132,6 +132,7 @@ MOCK_VEHICLES = {
         ],
         Platform.SENSOR: [
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_battery_autonomy",
                 ATTR_ICON: "mdi:ev-station",
                 ATTR_STATE: "141",
@@ -194,6 +195,7 @@ MOCK_VEHICLES = {
                 ATTR_UNIT_OF_MEASUREMENT: TIME_MINUTES,
             },
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_mileage",
                 ATTR_ICON: "mdi:sign-direction",
                 ATTR_STATE: "49114",
@@ -349,6 +351,7 @@ MOCK_VEHICLES = {
         ],
         Platform.SENSOR: [
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_battery_autonomy",
                 ATTR_ICON: "mdi:ev-station",
                 ATTR_STATE: "128",
@@ -411,6 +414,7 @@ MOCK_VEHICLES = {
                 ATTR_UNIT_OF_MEASUREMENT: TIME_MINUTES,
             },
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_mileage",
                 ATTR_ICON: "mdi:sign-direction",
                 ATTR_STATE: "49114",
@@ -566,6 +570,7 @@ MOCK_VEHICLES = {
         ],
         Platform.SENSOR: [
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_battery_autonomy",
                 ATTR_ICON: "mdi:ev-station",
                 ATTR_STATE: "141",
@@ -628,6 +633,7 @@ MOCK_VEHICLES = {
                 ATTR_UNIT_OF_MEASUREMENT: TIME_MINUTES,
             },
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_fuel_autonomy",
                 ATTR_ICON: "mdi:gas-station",
                 ATTR_STATE: "35",
@@ -644,6 +650,7 @@ MOCK_VEHICLES = {
                 ATTR_UNIT_OF_MEASUREMENT: VOLUME_LITERS,
             },
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_mileage",
                 ATTR_ICON: "mdi:sign-direction",
                 ATTR_STATE: "5567",
@@ -755,6 +762,7 @@ MOCK_VEHICLES = {
                 ATTR_STATE_CLASS: SensorStateClass.MEASUREMENT,
                 ATTR_UNIQUE_ID: "vf1aaaaa555777123_fuel_autonomy",
                 ATTR_UNIT_OF_MEASUREMENT: LENGTH_KILOMETERS,
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
             },
             {
                 ATTR_ENTITY_ID: "sensor.reg_number_fuel_quantity",
@@ -765,6 +773,7 @@ MOCK_VEHICLES = {
                 ATTR_UNIT_OF_MEASUREMENT: VOLUME_LITERS,
             },
             {
+                ATTR_DEVICE_CLASS: SensorDeviceClass.DISTANCE,
                 ATTR_ENTITY_ID: "sensor.reg_number_mileage",
                 ATTR_ICON: "mdi:sign-direction",
                 ATTR_STATE: "5567",
