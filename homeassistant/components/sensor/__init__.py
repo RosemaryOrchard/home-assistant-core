@@ -22,6 +22,7 @@ from homeassistant.const import (  # noqa: F401, pylint: disable=[hass-deprecate
     DEVICE_CLASS_CO2,
     DEVICE_CLASS_CURRENT,
     DEVICE_CLASS_DATE,
+    DEVICE_CLASS_DISTANCE,
     DEVICE_CLASS_ENERGY,
     DEVICE_CLASS_FREQUENCY,
     DEVICE_CLASS_GAS,
@@ -44,6 +45,14 @@ from homeassistant.const import (  # noqa: F401, pylint: disable=[hass-deprecate
     DEVICE_CLASS_TIMESTAMP,
     DEVICE_CLASS_VOLATILE_ORGANIC_COMPOUNDS,
     DEVICE_CLASS_VOLTAGE,
+    LENGTH_CENTIMETERS,
+    LENGTH_FEET,
+    LENGTH_INCHES,
+    LENGTH_KILOMETERS,
+    LENGTH_METERS,
+    LENGTH_MILES,
+    LENGTH_MILLIMETERS,
+    LENGTH_YARD,
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
     TEMP_KELVIN,
@@ -378,6 +387,12 @@ class SensorEntity(Entity):
                 and native_unit_of_measurement in (TEMP_CELSIUS, TEMP_FAHRENHEIT)
         ):
             return self.hass.config.units.temperature_unit
+
+        if (
+            self.device_class == DEVICE_CLASS_DISTANCE
+            and native_unit_of_measurement in (LENGTH_MILLIMETERS, LENGTH_CENTIMETERS, LENGTH_METERS, LENGTH_KILOMETERS, LENGTH_INCHES, LENGTH_FEET, LENGTH_YARD, LENGTH_MILES)
+        ):
+            return self.hass.config.units.length_unit
 
         return native_unit_of_measurement
 
