@@ -24,6 +24,7 @@ from homeassistant.components.sensor import (
 from homeassistant.const import (
     CONF_RESOURCES,
     CONF_SCAN_INTERVAL,
+    CONF_UNIQUE_ID,
     CONF_TYPE,
     DATA_GIBIBYTES,
     DATA_MEBIBYTES,
@@ -63,6 +64,8 @@ SENSOR_TYPE_DEVICE_CLASS = 3
 SENSOR_TYPE_MANDATORY_ARG = 4
 
 SIGNAL_SYSTEMMONITOR_UPDATE = "systemmonitor_update"
+
+ID_PREFIX = ""
 
 
 @dataclass
@@ -329,6 +332,11 @@ async def async_setup_platform(
     """Set up the system monitor sensors."""
     entities = []
     sensor_registry: dict[tuple[str, str], SensorData] = {}
+    if config[CONF_UNIQUE_ID]:
+        ID_PREFIX = config[CONF_UNIQUE_ID]
+        if not ID_PREFIX.endswith("_"):
+            ID_PREFIX += "_"
+
 
     for resource in config[CONF_RESOURCES]:
         type_ = resource[CONF_TYPE]
@@ -433,7 +441,7 @@ class SystemMonitorSensor(SensorEntity):
         """Initialize the sensor."""
         self.entity_description = sensor_description
         self._attr_name: str = f"{sensor_description.name} {argument}".rstrip()
-        self._attr_unique_id: str = slugify(f"{sensor_description.key}_{argument}")
+        self._attr_unique_id: str = ID_PREFIX + slugify(f"{sensor_description.key}_{argument}")
         self._sensor_registry = sensor_registry
         self._argument: str = argument
 
