@@ -193,6 +193,41 @@ SESSION_SENSOR_TYPES: tuple[TautulliSessionSensorEntityDescription, ...] = (
         entity_registry_enabled_default=False,
         value_fn=lambda session: cast(str, session.video_resolution),
     ),
+    TautulliSessionSensorEntityDescription(
+        key="ip_address",
+        translation_key="ip_address",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda session: cast(str, session.ip_address),
+    ),
+    TautulliSessionSensorEntityDescription(
+        key="platform",
+        translation_key="platform",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda session: cast(str, session.platform),
+    ),
+    TautulliSessionSensorEntityDescription(
+        key="platform_name",
+        translation_key="platform_name",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda session: cast(str, session.platform_name),
+    ),
+    TautulliSessionSensorEntityDescription(
+        key="player",
+        translation_key="player",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda session: cast(str, session.player),
+    ),
+    TautulliSessionSensorEntityDescription(
+        key="local",
+        translation_key="local",
+        entity_category=EntityCategory.DIAGNOSTIC,
+        entity_registry_enabled_default=False,
+        value_fn=lambda session: cast(str, session.local),
+    ),
 )
 
 

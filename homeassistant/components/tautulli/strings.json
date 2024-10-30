@@ -79,6 +79,21 @@
       },
       "video_resolution": {
         "name": "Video resolution"
+      },
+      "ip_address": {
+        "name": "IP Address"
+      },
+      "platform": {
+        "name": "Platform"
+      },
+      "platform_name": {
+        "name": "Platform name"
+      },
+      "player": {
+        "name": "Player"
+      },
+      "local": {
+        "name": "Local"
       }
     }
   }
